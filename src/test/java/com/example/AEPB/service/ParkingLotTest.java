@@ -79,5 +79,20 @@ public class ParkingLotTest {
         assertFalse(parkingLotStatus.isSuccess());
     }
 
+    @Test
+    void should_return_false_when_try_to_park_when_a_vehicle_with_same_plate_number_in_parking_lot(){
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        parkingLotService.parkingVehicle(vehicle);
+        Vehicle vehicleAnother = new Vehicle();
+        vehicleAnother.setCarPlateNumber("京A12345");
+        //when
+        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicleAnother);
+        //then
+        assertFalse(parkingLotStatus.isSuccess());
+
+    }
+
 
 }

@@ -26,6 +26,11 @@ public class ParkingLotService {
             System.out.println("车牌不能为空！");
             return parkingLotStatus;
         }
+        if(parkingLot.hasSameVehicle(vehicle)){
+            parkingLotStatus.setSuccess(false);
+            System.out.println("车牌重复！已报警");
+            return parkingLotStatus;
+        }
         vehicles.add(vehicle);
         if(vehicles.size() > PARKING_LOT_MAX_SIZE){
             parkingLotStatus.setSuccess(false);

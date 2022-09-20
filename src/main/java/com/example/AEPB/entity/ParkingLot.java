@@ -24,4 +24,13 @@ public class ParkingLot {
             }
         }
     }
+
+    public boolean hasSameVehicle(Vehicle vehicle) {
+        for (int i = 0; i < parkingLotList.size(); i++) {
+            if(parkingLotList.get(i).getCarPlateNumber().equals(vehicle.getCarPlateNumber())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
