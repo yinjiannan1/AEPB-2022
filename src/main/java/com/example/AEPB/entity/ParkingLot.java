@@ -6,18 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class parkingLot {
+public class ParkingLot {
     private List<Vehicle> ParkingLotList;
 
     public List<Vehicle> getParkingLotList() {
         return ParkingLotList;
+    }
+
+    public ParkingLot(List<Vehicle> parkingLotList) {
+        ParkingLotList = parkingLotList;
     }
 
     public void setParkingLotList(List<Vehicle> parkingLotList) {

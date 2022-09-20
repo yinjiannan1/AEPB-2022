@@ -1,6 +1,8 @@
 package com.example.AEPB.service;
 
+import com.example.AEPB.entity.ParkingLot;
 import com.example.AEPB.entity.ParkingLotStatus;
+import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,10 +30,21 @@ public class ParkingLotTest {
     void should_return_parking_failed_when_try_to_parking_given_an_vehicle_without_car_plate_number_and_parking_lot_exist() {
         //given
         Vehicle vehicle = new Vehicle();
-
         //when
         ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
         //then
         assertFalse(parkingLotStatus.isSuccess());
+    }
+
+    @Test
+    void should_return_picking_success_when_try_to_picking_given_an_useful_ticket_and_vehicle_has_parked(){
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        Ticket ticket = new Ticket(vehicle,true);
+        //when
+        ParkingLotStatus parkingLotStatus = parkingLotService.pickingVehicle(ticket);
+;        //then
+        assertTrue(parkingLotStatus.isSuccess());
     }
 }
