@@ -43,7 +43,8 @@ public class ParkingLotTest {
         vehicle.setCarPlateNumber("京A12345");
         ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
         //when
-        ParkingLotStatus pickingStatus = parkingLotService.pickingVehicle(parkingLotStatus.getTicket());//then
+        ParkingLotStatus pickingStatus = parkingLotService.pickingVehicle(parkingLotStatus.getTicket());
+        //then
         assertTrue(pickingStatus.isSuccess());
     }
 }

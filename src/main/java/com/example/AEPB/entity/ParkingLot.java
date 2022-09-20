@@ -1,26 +1,27 @@
 package com.example.AEPB.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingLot {
-    private List<Vehicle> ParkingLotList;
+    private List<Vehicle> parkingLotList;
 
     public List<Vehicle> getParkingLotList() {
-        return ParkingLotList;
+        return parkingLotList;
     }
 
     public ParkingLot(List<Vehicle> parkingLotList) {
-        ParkingLotList = parkingLotList;
+        this.parkingLotList = parkingLotList;
     }
 
     public void setParkingLotList(List<Vehicle> parkingLotList) {
-        ParkingLotList = parkingLotList;
+        this.parkingLotList = parkingLotList;
+    }
+
+    public void pickUpVehicle(Vehicle vehicle) {
+        for (int i = 0; i < parkingLotList.size(); i++) {
+            if(parkingLotList.get(i).equals(vehicle)){
+                parkingLotList.remove(i);
+            }
+        }
     }
 }

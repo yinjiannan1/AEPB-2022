@@ -40,8 +40,17 @@ public class ParkingLotService {
     }
 
     public ParkingLotStatus pickingVehicle(Ticket ticket) {
-        Vehicle vehicle = ticket.getVehicle();
-        return null;
+        ParkingLotStatus parkingLotStatus = new ParkingLotStatus();
+        if(map.containsKey(ticket)){
+            Vehicle vehicle = map.get(ticket);
+            parkingLot.pickUpVehicle(vehicle);
+            map.remove(ticket);
+            parkingLotStatus.setSuccess(true);
+            return parkingLotStatus;
+        }
+        parkingLotStatus.setSuccess(false);
+        System.out.println("取车失败");
+        return parkingLotStatus;
     }
 
 }
