@@ -11,7 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = ParkingLotTest.class)
 public class ParkingLotTest {
+
+    private static final int PARKING_LOT_MAX_SIZE = 200;
     ParkingLotService parkingLotService = new ParkingLotService();
+
 
     @Test
     void should_be_parking_success_when_try_to_park_given_an_vehicle_with_car_plate_number_not_empty() {
@@ -58,6 +61,23 @@ public class ParkingLotTest {
         //then
         Ticket ticket = new Ticket(vehicle,true);
         assertEquals(ticket.getVehicle(), parkingLotStatus.getTicket().getVehicle());
-
     }
+
+    @Test
+    void should_return_false_when_try_to_park_given_a_vehicle_with_plate_number_and_plateLot_is_full(){
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        for (int i = 0; i < PARKING_LOT_MAX_SIZE; i++) {
+            Vehicle vehicle1 = new Vehicle();
+            vehicle1.setCarPlateNumber(String.valueOf(i));
+            parkingLotService.parkingVehicle(vehicle1);
+        }
+        //when
+        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        //then
+        assertFalse(parkingLotStatus.isSuccess());
+    }
+
+
 }
