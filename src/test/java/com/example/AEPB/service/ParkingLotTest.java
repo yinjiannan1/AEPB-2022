@@ -3,15 +3,13 @@ package com.example.AEPB.service;
 import com.example.AEPB.entity.ParkingLotStatus;
 import com.example.AEPB.entity.Vehicle;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = ParkingLotTest.class)
 public class ParkingLotTest {
-    @Autowired(required = false)
-    ParkingLotService parkingLotService;
+    ParkingLotService parkingLotService = new ParkingLotService();
 
     @Test
     void should_be_parking_success_when_try_to_park_given_an_vehicle_with_car_plate_number_not_empty() {
