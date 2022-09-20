@@ -1,6 +1,5 @@
 package com.example.AEPB.service;
 
-import com.example.AEPB.entity.ParkingLot;
 import com.example.AEPB.entity.ParkingLotStatus;
 import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
@@ -107,7 +106,29 @@ public class ParkingLotTest {
         assertFalse(ticket.isEnabled());
     }
 
+    @Test
+    void should_return_false_when_try_to_pick_vehicle_given_an_unuseful_ticket() {
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        parkingLotService.parkingVehicle(vehicle);
+        Ticket ticket = new Ticket(vehicle,false);
+        //when
+        ParkingLotStatus parkingLotStatus = parkingLotService.pickingVehicle(ticket);
+        assertFalse(parkingLotStatus.isSuccess());
+    }
 
+
+    @Test
+    void should_return_false_when_try_to_park_given_an_vehicle_without_park_lot(){
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        //when
+        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        //then
+        assertFalse(parkingLotStatus.isSuccess());
+    }
 
 
 }
