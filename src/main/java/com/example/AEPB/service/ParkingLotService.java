@@ -23,11 +23,13 @@ public class ParkingLotService {
         List<Vehicle> vehicles = parkingLot.getParkingLotList();
         if(Objects.isNull(vehicle) || vehicle.getCarPlateNumber() == null){
             parkingLotStatus.setSuccess(false);
+            System.out.println("车牌不能为空！");
             return parkingLotStatus;
         }
         vehicles.add(vehicle);
         if(vehicles.size() > PARKING_LOT_MAX_SIZE){
             parkingLotStatus.setSuccess(false);
+            System.out.println("车库已满！");
             return parkingLotStatus;
         }
         Ticket ticket = new Ticket(vehicle, true);

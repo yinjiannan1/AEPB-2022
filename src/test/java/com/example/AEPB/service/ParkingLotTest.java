@@ -41,10 +41,9 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        Ticket ticket = new Ticket(vehicle,true);
+        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.pickingVehicle(ticket);
-;        //then
-        assertTrue(parkingLotStatus.isSuccess());
+        ParkingLotStatus pickingStatus = parkingLotService.pickingVehicle(parkingLotStatus.getTicket());//then
+        assertTrue(pickingStatus.isSuccess());
     }
 }
