@@ -49,6 +49,7 @@ public class ParkingLotService {
         if(map.containsKey(ticket)){
             Vehicle vehicle = map.get(ticket);
             parkingLot.pickUpVehicle(vehicle);
+            ticket.setEnabled(false);
             map.remove(ticket);
             parkingLotStatus.setSuccess(true);
             return parkingLotStatus;

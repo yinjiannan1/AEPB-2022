@@ -94,5 +94,20 @@ public class ParkingLotTest {
 
     }
 
+    @Test
+    void should_return_false_when_picking_vehicle_given_an_vehicle_parked_and_get_a_ticket(){
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        Ticket ticket = parkingLotStatus.getTicket();
+        //when
+        parkingLotService.pickingVehicle(ticket);
+        //then
+        assertFalse(ticket.isEnabled());
+    }
+
+
+
 
 }
