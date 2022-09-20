@@ -13,4 +13,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Vehicle {
     private String carPlateNumber;
+
+    public String getCarPlateNumber() {
+        return carPlateNumber;
+    }
+
+    public void setCarPlateNumber(String carPlateNumber) {
+        this.carPlateNumber = carPlateNumber;
+    }
 }

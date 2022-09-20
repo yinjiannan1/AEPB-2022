@@ -15,4 +15,12 @@ import java.util.List;
 @AllArgsConstructor
 public class parkingLot {
     private List<Vehicle> ParkingLotList;
+
+    public List<Vehicle> getParkingLotList() {
+        return ParkingLotList;
+    }
+
+    public void setParkingLotList(List<Vehicle> parkingLotList) {
+        ParkingLotList = parkingLotList;
+    }
 }

@@ -1,18 +1,16 @@
-package com.example.AEPB;
+package com.example.AEPB.service;
 
 import com.example.AEPB.entity.ParkingLotStatus;
-import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
-import com.example.AEPB.service.ParkingLotService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = ParkingLotTest.class)
 public class ParkingLotTest {
-    @Autowired
+    @Autowired(required = false)
     ParkingLotService parkingLotService;
 
     @Test
