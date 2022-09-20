@@ -47,4 +47,17 @@ public class ParkingLotTest {
         //then
         assertTrue(pickingStatus.isSuccess());
     }
+
+    @Test
+    void should_return_ticket_when_parked_vehicle_given_an_vehicle_parked(){
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        //when
+        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        //then
+        Ticket ticket = new Ticket(vehicle,true);
+        assertEquals(ticket.getVehicle(), parkingLotStatus.getTicket().getVehicle());
+
+    }
 }
