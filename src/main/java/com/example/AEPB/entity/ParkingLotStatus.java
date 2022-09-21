@@ -7,10 +7,16 @@ import lombok.NoArgsConstructor;
 public class ParkingLotStatus {
     private boolean success = false;
 
+    private ParkingLot parkingLot;
+
     private Ticket ticket;
 
-    public static String getParkingLot() {
-        return null;
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
     }
 
     public boolean isSuccess() {

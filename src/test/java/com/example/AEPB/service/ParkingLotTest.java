@@ -1,5 +1,6 @@
 package com.example.AEPB.service;
 
+import com.example.AEPB.entity.ParkingLot;
 import com.example.AEPB.entity.ParkingLotStatus;
 import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = ParkingLotTest.class)
 public class ParkingLotTest {
 
-    private static final int PARKING_LOT_MAX_SIZE = 200;
+    private static final int PARKING_LOT_MAX_SIZE = 300;
     ParkingBoy parkingBoy = new ParkingBoy();
 
 
@@ -119,18 +120,6 @@ public class ParkingLotTest {
         assertFalse(parkingLotStatus.isSuccess());
     }
 
-
-    @Test
-    void should_return_false_when_try_to_park_given_an_vehicle_without_park_lot(){
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
-        //when
-        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
-        //then
-        assertFalse(parkingLotStatus.isSuccess());
-    }
-
     @Test
     void should_return_parking_success_in_A_when_try_to_park_given_an_parking_boy_and_A_with_empty_parking_lot () {
         //given
@@ -139,8 +128,8 @@ public class ParkingLotTest {
         //when
         ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         //then
-        assertFalse(parkingLotStatus.isSuccess());
-        assertEquals("A", ParkingLotStatus.getParkingLot());
+        assertTrue(parkingLotStatus.isSuccess());
+        assertEquals("A", parkingLotStatus.getParkingLot().getLotName());
     }
 
 

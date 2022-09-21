@@ -6,21 +6,29 @@ import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class ParkingBoy {
 
-    private static final int PARKING_LOT_MAX_SIZE = 200;
-    private ParkingLot parkingLot = new ParkingLot(new ArrayList<>());
+    private List<ParkingLot> parkingLotList = new ArrayList<>();
     private static final HashMap<Ticket, Vehicle> map = new HashMap<>();
+
+    public ParkingBoy() {
+        this.parkingLotList.add(new ParkingLot("A", 100, new ArrayList<>(), 1));
+        this.parkingLotList.add(new ParkingLot("B", 100, new ArrayList<>(), 2));
+        this.parkingLotList.add(new ParkingLot("C", 100, new ArrayList<>(), 3));
+    }
 
     public ParkingLotStatus parkingVehicle(Vehicle vehicle) {
         ParkingLotStatus parkingLotStatus = new ParkingLotStatus();
-        List<Vehicle> vehicles = parkingLot.getParkingLotList();
+        if(!isExistEmptyLot()){
+            System.out.println("车库已满！");
+            parkingLotStatus.setSuccess(false);
+            return parkingLotStatus;
+        }
+        ParkingLot parkingLot = findFirstHasEmptyLot();
+        List<Vehicle> vehicles = parkingLot.getVehicleList();
         if(Objects.isNull(vehicle) || vehicle.getCarPlateNumber() == null){
             parkingLotStatus.setSuccess(false);
             System.out.println("车牌不能为空！");
@@ -31,16 +39,12 @@ public class ParkingBoy {
             System.out.println("车牌重复！已报警");
             return parkingLotStatus;
         }
-        vehicles.add(vehicle);
-        if(vehicles.size() > PARKING_LOT_MAX_SIZE){
-            parkingLotStatus.setSuccess(false);
-            System.out.println("车库已满！");
-            return parkingLotStatus;
-        }
         Ticket ticket = new Ticket(vehicle, true);
         map.put(ticket, vehicle);
+        vehicles.add(vehicle);
         parkingLotStatus.setSuccess(true);
         parkingLotStatus.setTicket(ticket);
+        parkingLotStatus.setParkingLot(parkingLot);
         return parkingLotStatus;
     }
 
@@ -48,6 +52,7 @@ public class ParkingBoy {
         ParkingLotStatus parkingLotStatus = new ParkingLotStatus();
         if(map.containsKey(ticket)){
             Vehicle vehicle = map.get(ticket);
+            ParkingLot parkingLot = findVehicleInWhichLot(vehicle);
             parkingLot.pickUpVehicle(vehicle);
             ticket.setEnabled(false);
             map.remove(ticket);
@@ -57,6 +62,34 @@ public class ParkingBoy {
         parkingLotStatus.setSuccess(false);
         System.out.println("取车失败");
         return parkingLotStatus;
+    }
+
+    private ParkingLot findFirstHasEmptyLot() {
+        this.parkingLotList.sort(Comparator.comparing(ParkingLot::getOrder));
+        for (ParkingLot lot : this.parkingLotList) {
+            if (lot.getVehicleList().size() < lot.getSize()) {
+                return lot;
+            }
+        }
+        return null;
+    }
+
+    private boolean isExistEmptyLot() {
+        for (ParkingLot lot : this.parkingLotList) {
+            if (lot.getVehicleList().size() >= lot.getSize()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private ParkingLot findVehicleInWhichLot(Vehicle vehicle) {
+        for (ParkingLot lot : this.parkingLotList) {
+            if(lot.getVehicleList().contains(vehicle)){
+                return lot;
+            }
+        }
+        return null;
     }
 
 }

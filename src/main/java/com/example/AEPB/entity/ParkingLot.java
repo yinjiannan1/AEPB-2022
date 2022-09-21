@@ -3,31 +3,64 @@ package com.example.AEPB.entity;
 import java.util.List;
 
 public class ParkingLot {
-    private List<Vehicle> parkingLotList;
+    private List<Vehicle> vehicleList;
 
-    public List<Vehicle> getParkingLotList() {
-        return parkingLotList;
+    private int size = 100;
+
+    private int order;
+
+    public String getLotName() {
+        return lotName;
     }
 
-    public ParkingLot(List<Vehicle> parkingLotList) {
-        this.parkingLotList = parkingLotList;
+    public void setLotName(String lotName) {
+        this.lotName = lotName;
     }
 
-    public void setParkingLotList(List<Vehicle> parkingLotList) {
-        this.parkingLotList = parkingLotList;
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    private String lotName;
+
+    public List<Vehicle> getVehicleList() {
+        return vehicleList;
+    }
+
+    public ParkingLot(String lotName, int size, List<Vehicle> vehicleList, int order) {
+        this.vehicleList = vehicleList;
+        this.lotName = lotName;
+        this.size = size;
+        this.order = order;
+    }
+
+    public void setVehicleList(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
     }
 
     public void pickUpVehicle(Vehicle vehicle) {
-        for (int i = 0; i < parkingLotList.size(); i++) {
-            if(parkingLotList.get(i).equals(vehicle)){
-                parkingLotList.remove(i);
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if(vehicleList.get(i).equals(vehicle)){
+                vehicleList.remove(i);
             }
         }
     }
 
     public boolean hasSameVehicle(Vehicle vehicle) {
-        for (int i = 0; i < parkingLotList.size(); i++) {
-            if(parkingLotList.get(i).getCarPlateNumber().equals(vehicle.getCarPlateNumber())){
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if(vehicleList.get(i).getCarPlateNumber().equals(vehicle.getCarPlateNumber())){
                 return true;
             }
         }
