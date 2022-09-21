@@ -1,6 +1,5 @@
 package com.example.AEPB.service;
 
-import com.example.AEPB.entity.ParkingLot;
 import com.example.AEPB.entity.ParkingLotStatus;
 import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
@@ -164,6 +163,22 @@ public class ParkingLotTest {
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertEquals("C", parkingLotStatus.getParkingLot().getLotName());
+    }
+
+    @Test
+    void should_return_false_when_try_to_park_given_an_parking_boy_and_ABC_is_full () {
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        for (int i = 0; i < 300; i++) {
+            Vehicle vehicle1 = new Vehicle();
+            vehicle1.setCarPlateNumber(String.valueOf(i));
+            parkingBoy.parkingVehicle(vehicle1);
+        }
+        //when
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
+        //then
+        assertFalse(parkingLotStatus.isSuccess());
     }
 
 
