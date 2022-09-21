@@ -9,6 +9,10 @@ public class ParkingLotStatus {
 
     private Ticket ticket;
 
+    public static String getParkingLot() {
+        return null;
+    }
+
     public boolean isSuccess() {
         return success;
     }

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ParkingLotService {
+public class ParkingBoy {
 
     private static final int PARKING_LOT_MAX_SIZE = 200;
     private ParkingLot parkingLot = new ParkingLot(new ArrayList<>());

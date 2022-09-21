@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ParkingLotTest {
 
     private static final int PARKING_LOT_MAX_SIZE = 200;
-    ParkingLotService parkingLotService = new ParkingLotService();
+    ParkingBoy parkingBoy = new ParkingBoy();
+
 
 
     @Test
@@ -21,7 +22,7 @@ public class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertTrue(parkingLotStatus.getTicket().isEnabled());
@@ -33,7 +34,7 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         //then
         assertFalse(parkingLotStatus.isSuccess());
     }
@@ -43,9 +44,9 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         //when
-        ParkingLotStatus pickingStatus = parkingLotService.pickingVehicle(parkingLotStatus.getTicket());
+        ParkingLotStatus pickingStatus = parkingBoy.pickingVehicle(parkingLotStatus.getTicket());
         //then
         assertTrue(pickingStatus.isSuccess());
     }
@@ -56,7 +57,7 @@ public class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         //then
         Ticket ticket = new Ticket(vehicle,true);
         assertEquals(ticket.getVehicle(), parkingLotStatus.getTicket().getVehicle());
@@ -70,10 +71,10 @@ public class ParkingLotTest {
         for (int i = 0; i < PARKING_LOT_MAX_SIZE; i++) {
             Vehicle vehicle1 = new Vehicle();
             vehicle1.setCarPlateNumber(String.valueOf(i));
-            parkingLotService.parkingVehicle(vehicle1);
+            parkingBoy.parkingVehicle(vehicle1);
         }
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         //then
         assertFalse(parkingLotStatus.isSuccess());
     }
@@ -83,11 +84,11 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        parkingLotService.parkingVehicle(vehicle);
+        parkingBoy.parkingVehicle(vehicle);
         Vehicle vehicleAnother = new Vehicle();
         vehicleAnother.setCarPlateNumber("京A12345");
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicleAnother);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicleAnother);
         //then
         assertFalse(parkingLotStatus.isSuccess());
 
@@ -98,10 +99,10 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         Ticket ticket = parkingLotStatus.getTicket();
         //when
-        parkingLotService.pickingVehicle(ticket);
+        parkingBoy.pickingVehicle(ticket);
         //then
         assertFalse(ticket.isEnabled());
     }
@@ -111,10 +112,10 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        parkingLotService.parkingVehicle(vehicle);
+        parkingBoy.parkingVehicle(vehicle);
         Ticket ticket = new Ticket(vehicle,false);
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.pickingVehicle(ticket);
+        ParkingLotStatus parkingLotStatus = parkingBoy.pickingVehicle(ticket);
         assertFalse(parkingLotStatus.isSuccess());
     }
 
@@ -125,9 +126,21 @@ public class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         //when
-        ParkingLotStatus parkingLotStatus = parkingLotService.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
         //then
         assertFalse(parkingLotStatus.isSuccess());
+    }
+
+    @Test
+    void should_return_parking_success_in_A_when_try_to_park_given_an_parking_boy_and_A_with_empty_parking_lot () {
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        //when
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
+        //then
+        assertFalse(parkingLotStatus.isSuccess());
+        assertEquals("A", ParkingLotStatus.getParkingLot());
     }
 
 
