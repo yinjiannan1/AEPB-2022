@@ -181,5 +181,20 @@ public class ParkingLotTest {
         assertFalse(parkingLotStatus.isSuccess());
     }
 
+    @Test
+    void should_return_true_when_try_to_pick_given_an_valid_ticket () {
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
+        Ticket ticket = parkingLotStatus.getTicket();
+        //when
+
+        ParkingLotStatus pickingLotStatus = parkingBoy.pickingVehicle(ticket);
+        //then
+        assertTrue(pickingLotStatus.isSuccess());
+        assertFalse(ticket.isEnabled());
+    }
+
 
 }
