@@ -196,5 +196,20 @@ public class ParkingLotTest {
         assertFalse(ticket.isEnabled());
     }
 
+    @Test
+    void should_return_false_when_try_to_pick_given_ticket_with_another_ticket() {
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        parkingBoy.parkingVehicle(vehicle);
+        Vehicle vehicle1 = new Vehicle();
+        vehicle1.setCarPlateNumber("京12345");
+        Ticket ticket1 = new Ticket(vehicle1, true);
+        //when
+        ParkingLotStatus pickingLotStatus = parkingBoy.pickingVehicle(ticket1);
+        //then
+        assertFalse(pickingLotStatus.isSuccess());
+    }
+
 
 }
