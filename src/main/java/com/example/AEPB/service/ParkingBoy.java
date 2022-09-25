@@ -66,7 +66,7 @@ public class ParkingBoy {
 
     public ParkingLotStatus pickingVehicle(Ticket ticket) {
         ParkingLotStatus parkingLotStatus = new ParkingLotStatus();
-        if(ticketVehicleHashMap.containsKey(ticket)){
+        if(ticketVehicleHashMap.containsKey(ticket) && ticket.isEnabled()){
             Vehicle vehicle = ticketVehicleHashMap.get(ticket);
             ParkingLot parkingLot = findVehicleInWhichLot(vehicle);
             parkingLot.pickUpVehicle(vehicle);
