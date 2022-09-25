@@ -12,12 +12,28 @@ import java.util.*;
 public class ParkingBoy {
 
     private List<ParkingLot> parkingLotList = new ArrayList<>();
-    private HashMap<Ticket, Vehicle> map = new HashMap<>();
+    private HashMap<Ticket, Vehicle> ticketVehicleHashMap = new HashMap<>();
 
     public ParkingBoy() {
         this.parkingLotList.add(new ParkingLot("A", 100, new ArrayList<>(), 1));
         this.parkingLotList.add(new ParkingLot("B", 100, new ArrayList<>(), 2));
         this.parkingLotList.add(new ParkingLot("C", 100, new ArrayList<>(), 3));
+    }
+
+    public List<ParkingLot> getParkingLotList() {
+        return parkingLotList;
+    }
+
+    public void setParkingLotList(List<ParkingLot> parkingLotList) {
+        this.parkingLotList = parkingLotList;
+    }
+
+    public HashMap<Ticket, Vehicle> getTicketVehicleHashMap() {
+        return ticketVehicleHashMap;
+    }
+
+    public void setTicketVehicleHashMap(HashMap<Ticket, Vehicle> ticketVehicleHashMap) {
+        this.ticketVehicleHashMap = ticketVehicleHashMap;
     }
 
     public ParkingLotStatus parkingVehicle(Vehicle vehicle) {
@@ -40,7 +56,7 @@ public class ParkingBoy {
             return parkingLotStatus;
         }
         Ticket ticket = new Ticket(vehicle, true);
-        map.put(ticket, vehicle);
+        ticketVehicleHashMap.put(ticket, vehicle);
         vehicles.add(vehicle);
         parkingLotStatus.setSuccess(true);
         parkingLotStatus.setTicket(ticket);
@@ -50,12 +66,12 @@ public class ParkingBoy {
 
     public ParkingLotStatus pickingVehicle(Ticket ticket) {
         ParkingLotStatus parkingLotStatus = new ParkingLotStatus();
-        if(map.containsKey(ticket)){
-            Vehicle vehicle = map.get(ticket);
+        if(ticketVehicleHashMap.containsKey(ticket)){
+            Vehicle vehicle = ticketVehicleHashMap.get(ticket);
             ParkingLot parkingLot = findVehicleInWhichLot(vehicle);
             parkingLot.pickUpVehicle(vehicle);
             ticket.setEnabled(false);
-            map.remove(ticket);
+            ticketVehicleHashMap.remove(ticket);
             parkingLotStatus.setSuccess(true);
             return parkingLotStatus;
         }

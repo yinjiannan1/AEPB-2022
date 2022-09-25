@@ -1,10 +1,14 @@
 package com.example.AEPB.service;
 
+import com.example.AEPB.entity.ParkingLot;
 import com.example.AEPB.entity.ParkingLotStatus;
 import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,8 +103,12 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
-        Ticket ticket = parkingLotStatus.getTicket();
+        Ticket ticket = new Ticket(vehicle, true);
+        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
+        parkingLotList.get(0).getVehicleList().add(vehicle);
+        ticketVehicleHashMap.put(ticket, vehicle);
+        parkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
         //when
         parkingBoy.pickingVehicle(ticket);
         //then
