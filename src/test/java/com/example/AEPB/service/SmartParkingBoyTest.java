@@ -252,4 +252,16 @@ public class SmartParkingBoyTest {
         assertFalse(pickingLotStatus.isSuccess());
     }
 
+    @Test
+    void should_return_parking_success_when_try_to_parking_given_three_parking_lot_has_same_site() {
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+        //when
+        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle);
+        //then
+        assertTrue(parkingLotStatus.isSuccess());
+        assertEquals("A", parkingLotStatus.getParkingLot().getLotName());
+    }
+
 }
