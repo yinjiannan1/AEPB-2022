@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = ParkingLotTest.class)
-public class ParkingLotTest {
+class ParkingLotTest {
 
     private static final int PARKING_LOT_MAX_SIZE = 300;
     ParkingBoy parkingBoy = new ParkingBoy();
@@ -48,9 +48,14 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
+        Ticket ticket = new Ticket(vehicle, true);
+        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
+        parkingLotList.get(0).getVehicleList().add(vehicle);
+        ticketVehicleHashMap.put(ticket, vehicle);
+        parkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
         //when
-        ParkingLotStatus pickingStatus = parkingBoy.pickingVehicle(parkingLotStatus.getTicket());
+        ParkingLotStatus pickingStatus = parkingBoy.pickingVehicle(ticket);
         //then
         assertTrue(pickingStatus.isSuccess());
     }
@@ -72,10 +77,17 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        for (int i = 0; i < PARKING_LOT_MAX_SIZE; i++) {
-            Vehicle vehicle1 = new Vehicle();
-            vehicle1.setCarPlateNumber(String.valueOf(i));
-            parkingBoy.parkingVehicle(vehicle1);
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < 100; i++) {
+                Vehicle vehicle1 = new Vehicle();
+                vehicle1.setCarPlateNumber(String.valueOf(i));
+                Ticket ticket = new Ticket(vehicle1, false);
+                HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+                List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
+                parkingLotList.get(j).getVehicleList().add(vehicle);
+                ticketVehicleHashMap.put(ticket, vehicle1);
+                parkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
+            }
         }
         //when
         ParkingLotStatus parkingLotStatus = parkingBoy.parkingVehicle(vehicle);
@@ -88,7 +100,12 @@ public class ParkingLotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        parkingBoy.parkingVehicle(vehicle);
+        Ticket ticket = new Ticket(vehicle, false);
+        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
+        parkingLotList.get(0).getVehicleList().add(vehicle);
+        ticketVehicleHashMap.put(ticket, vehicle);
+        parkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
         Vehicle vehicleAnother = new Vehicle();
         vehicleAnother.setCarPlateNumber("京A12345");
         //when

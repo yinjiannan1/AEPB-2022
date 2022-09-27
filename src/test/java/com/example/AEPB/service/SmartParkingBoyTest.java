@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = SmartParkingBoyTest.class)
-public class SmartParkingBoyTest {
+class SmartParkingBoyTest {
 
     private static final int PARKING_LOT_MAX_SIZE = 300;
     SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
@@ -50,9 +50,14 @@ public class SmartParkingBoyTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle);
+        Ticket ticket = new Ticket(vehicle, true);
+        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+        List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
+        parkingLotList.get(0).getVehicleList().add(vehicle);
+        ticketVehicleHashMap.put(ticket, vehicle);
+        smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
         //when
-        ParkingLotStatus pickingStatus = smartParkingBoy.pickingVehicle(parkingLotStatus.getTicket());
+        ParkingLotStatus pickingStatus = smartParkingBoy.pickingVehicle(ticket);
         //then
         assertTrue(pickingStatus.isSuccess());
     }
