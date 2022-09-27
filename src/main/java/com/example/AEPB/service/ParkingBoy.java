@@ -11,8 +11,8 @@ import java.util.*;
 @Service
 public class ParkingBoy {
 
-    private List<ParkingLot> parkingLotList = new ArrayList<>();
-    private HashMap<Ticket, Vehicle> ticketVehicleHashMap = new HashMap<>();
+    public List<ParkingLot> parkingLotList = new ArrayList<>();
+    public HashMap<Ticket, Vehicle> ticketVehicleHashMap = new HashMap<>();
 
     public ParkingBoy() {
         this.parkingLotList.add(new ParkingLot("A", 100, new ArrayList<>(), 1));
