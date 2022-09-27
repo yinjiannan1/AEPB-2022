@@ -29,6 +29,10 @@ public class ParkingLot {
         return order;
     }
 
+    public int getVehicleNumber() {
+        return this.vehicleList.size();
+    }
+
     public void setOrder(int order) {
         this.order = order;
     }

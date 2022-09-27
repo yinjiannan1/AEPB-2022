@@ -90,7 +90,7 @@ public class ParkingBoy {
         return null;
     }
 
-    private boolean isExistEmptyLot() {
+    public boolean isExistEmptyLot() {
         for (ParkingLot lot : this.parkingLotList) {
             if (lot.getVehicleList().size() < lot.getSize()) {
                 return true;

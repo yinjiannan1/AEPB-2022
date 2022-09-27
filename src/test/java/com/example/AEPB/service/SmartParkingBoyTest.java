@@ -150,118 +150,59 @@ public class SmartParkingBoyTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        for (int i = 0; i < 100; i++) {
-            Vehicle vehicle1 = new Vehicle();
-            vehicle1.setCarPlateNumber(String.valueOf(i));
-            Ticket ticket = new Ticket(vehicle, false);
-            HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
-            List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
-            parkingLotList.get(0).getVehicleList().add(vehicle);
-            ticketVehicleHashMap.put(ticket, vehicle);
-            smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
-        }
-        //when
-        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle);
-        //then
-        assertTrue(parkingLotStatus.isSuccess());
-        assertEquals("B", parkingLotStatus.getParkingLot().getLotName());
-    }
 
-    @Test
-    void should_return_parking_success_in_C_when_try_to_park_given_an_parking_boy_and_AB_is_full_C_with_empty_parking_lot () {
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
-        for (int j = 0; j < 2; j++) {
-            for (int i = 0; i < 100; i++) {
-                Vehicle vehicle1 = new Vehicle();
-                vehicle1.setCarPlateNumber(String.valueOf(i));
-                Ticket ticket = new Ticket(vehicle1, false);
+        Vehicle vehicle1 = new Vehicle();
+        vehicle1.setCarPlateNumber("京A2345");
+
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setCarPlateNumber("京A1245");
+
+                Ticket ticket = new Ticket(vehicle, false);
+                Ticket ticket1 = new Ticket(vehicle, false);
                 HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
                 List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
-                parkingLotList.get(j).getVehicleList().add(vehicle);
-                ticketVehicleHashMap.put(ticket, vehicle1);
+                parkingLotList.get(0).getVehicleList().add(vehicle);
+                parkingLotList.get(1).getVehicleList().add(vehicle1);
+                ticketVehicleHashMap.put(ticket, vehicle);
+                ticketVehicleHashMap.put(ticket1, vehicle1);
                 smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
-            }
-        }
+
+
         //when
-        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = smartParkingBoy.smartParkingVehicle(vehicle2);
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertEquals("C", parkingLotStatus.getParkingLot().getLotName());
     }
 
     @Test
-    void should_return_false_when_try_to_park_given_an_parking_boy_and_ABC_is_full () {
+    void should_return_parking_success_when_try_to_parking_given_B_parking_lot_has_largest_site() {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        for (int j = 0; j < 3; j++) {
-            for (int i = 0; i < 100; i++) {
-                Vehicle vehicle1 = new Vehicle();
-                vehicle1.setCarPlateNumber(String.valueOf(i));
-                Ticket ticket = new Ticket(vehicle1, false);
-                HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
-                List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
-                parkingLotList.get(j).getVehicleList().add(vehicle);
-                ticketVehicleHashMap.put(ticket, vehicle1);
-                smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
-            }
-        }
-        //when
-        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle);
-        //then
-        assertFalse(parkingLotStatus.isSuccess());
-    }
 
-    @Test
-    void should_return_true_when_try_to_pick_given_an_valid_ticket () {
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
-        Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
-        List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
-        parkingLotList.get(0).getVehicleList().add(vehicle);
-        ticketVehicleHashMap.put(ticket, vehicle);
-        smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
-        //when
-        ParkingLotStatus pickingLotStatus = smartParkingBoy.pickingVehicle(ticket);
-        //then
-        assertTrue(pickingLotStatus.isSuccess());
-        assertFalse(ticket.isEnabled());
-    }
-
-    @Test
-    void should_return_false_when_try_to_pick_given_ticket_with_another_ticket() {
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
-        Ticket ticket = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
-        List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
-        parkingLotList.get(0).getVehicleList().add(vehicle);
-        ticketVehicleHashMap.put(ticket, vehicle);
-        smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
         Vehicle vehicle1 = new Vehicle();
-        vehicle1.setCarPlateNumber("京12345");
-        Ticket ticket1 = new Ticket(vehicle1, true);
-        //when
-        ParkingLotStatus pickingLotStatus = smartParkingBoy.pickingVehicle(ticket1);
-        //then
-        assertFalse(pickingLotStatus.isSuccess());
-    }
+        vehicle1.setCarPlateNumber("京A2345");
 
-    @Test
-    void should_return_parking_success_when_try_to_parking_given_three_parking_lot_has_same_site() {
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setCarPlateNumber("京A1245");
+
+        Ticket ticket = new Ticket(vehicle, false);
+        Ticket ticket1 = new Ticket(vehicle, false);
+        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+        List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
+        parkingLotList.get(0).getVehicleList().add(vehicle);
+        parkingLotList.get(2).getVehicleList().add(vehicle1);
+        ticketVehicleHashMap.put(ticket, vehicle);
+        ticketVehicleHashMap.put(ticket1, vehicle1);
+        smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
+
+
         //when
-        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle);
+        ParkingLotStatus parkingLotStatus = smartParkingBoy.smartParkingVehicle(vehicle2);
         //then
         assertTrue(parkingLotStatus.isSuccess());
-        assertEquals("A", parkingLotStatus.getParkingLot().getLotName());
+        assertEquals("B", parkingLotStatus.getParkingLot().getLotName());
     }
 
 }
