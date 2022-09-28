@@ -161,7 +161,7 @@ class ParkingRobotTest {
     }
 
     @Test
-    void should_return_parking_success_in_B_when_try_to_park_given_an_parking_boy_and_C_with_higher_empty_ratio() {
+    void should_return_parking_success_in_C_when_try_to_park_given_an_parking_boy_and_C_with_higher_empty_ratio() {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
@@ -184,6 +184,32 @@ class ParkingRobotTest {
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertEquals("C", parkingLotStatus.getParkingLot().getLotName());
+    }
+
+    @Test
+    void should_return_parking_success_in_A_when_try_to_park_given_an_parking_boy_and_ABC_with_same_empty_ratio() {
+        //given
+        Vehicle vehicle = new Vehicle();
+        vehicle.setCarPlateNumber("京A12345");
+
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < 50; i++) {
+                Vehicle vehicle1 = new Vehicle();
+                vehicle1.setCarPlateNumber(String.valueOf(i));
+                Ticket ticket = new Ticket(vehicle1, false);
+                Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+                List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
+                parkingLotList.get(j).getVehicleList().add(vehicle1);
+                ticketVehicleHashMap.put(ticket, vehicle1);
+                parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
+            }
+        }
+
+        //when
+        ParkingLotStatus parkingLotStatus = parkingRobot.parkingVehicle(vehicle);
+        //then
+        assertTrue(parkingLotStatus.isSuccess());
+        assertEquals("A", parkingLotStatus.getParkingLot().getLotName());
     }
 
 }
