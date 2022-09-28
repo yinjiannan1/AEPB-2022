@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,7 +50,7 @@ class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -82,7 +83,7 @@ class ParkingLotTest {
                 Vehicle vehicle1 = new Vehicle();
                 vehicle1.setCarPlateNumber(String.valueOf(i));
                 Ticket ticket = new Ticket(vehicle1, false);
-                HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+                Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
                 List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
                 parkingLotList.get(j).getVehicleList().add(vehicle);
                 ticketVehicleHashMap.put(ticket, vehicle1);
@@ -101,7 +102,7 @@ class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -121,7 +122,7 @@ class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -138,7 +139,7 @@ class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -169,7 +170,7 @@ class ParkingLotTest {
             Vehicle vehicle1 = new Vehicle();
             vehicle1.setCarPlateNumber(String.valueOf(i));
             Ticket ticket = new Ticket(vehicle, false);
-            HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+            Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
             List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
             parkingLotList.get(0).getVehicleList().add(vehicle);
             ticketVehicleHashMap.put(ticket, vehicle);
@@ -192,7 +193,7 @@ class ParkingLotTest {
                 Vehicle vehicle1 = new Vehicle();
                 vehicle1.setCarPlateNumber(String.valueOf(i));
                 Ticket ticket = new Ticket(vehicle1, false);
-                HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+                Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
                 List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
                 parkingLotList.get(j).getVehicleList().add(vehicle);
                 ticketVehicleHashMap.put(ticket, vehicle1);
@@ -216,7 +217,7 @@ class ParkingLotTest {
                 Vehicle vehicle1 = new Vehicle();
                 vehicle1.setCarPlateNumber(String.valueOf(i));
                 Ticket ticket = new Ticket(vehicle1, false);
-                HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+                Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
                 List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
                 parkingLotList.get(j).getVehicleList().add(vehicle);
                 ticketVehicleHashMap.put(ticket, vehicle1);
@@ -235,7 +236,7 @@ class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -253,7 +254,7 @@ class ParkingLotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);

@@ -12,7 +12,7 @@ import java.util.*;
 public class ParkingBoy {
 
     public List<ParkingLot> parkingLotList = new ArrayList<>();
-    public HashMap<Ticket, Vehicle> ticketVehicleHashMap = new HashMap<>();
+    public Map<Ticket, Vehicle> ticketVehicleHashMap = new HashMap<>();
 
     public ParkingBoy() {
         this.parkingLotList.add(new ParkingLot("A", 100, new ArrayList<>(), 1));
@@ -28,11 +28,11 @@ public class ParkingBoy {
         this.parkingLotList = parkingLotList;
     }
 
-    public HashMap<Ticket, Vehicle> getTicketVehicleHashMap() {
+    public Map<Ticket, Vehicle> getTicketVehicleHashMap() {
         return ticketVehicleHashMap;
     }
 
-    public void setTicketVehicleHashMap(HashMap<Ticket, Vehicle> ticketVehicleHashMap) {
+    public void setTicketVehicleHashMap(Map<Ticket, Vehicle> ticketVehicleHashMap) {
         this.ticketVehicleHashMap = ticketVehicleHashMap;
     }
 

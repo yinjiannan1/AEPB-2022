@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -51,7 +52,7 @@ class ParkingRobotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -111,7 +112,7 @@ class ParkingRobotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -128,7 +129,7 @@ class ParkingRobotTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -164,7 +165,7 @@ class ParkingRobotTest {
 
         Ticket ticket = new Ticket(vehicle, false);
         Ticket ticket1 = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         parkingLotList.get(1).getVehicleList().add(vehicle1);
@@ -174,7 +175,7 @@ class ParkingRobotTest {
 
 
         //when
-        ParkingLotStatus parkingLotStatus = parkingRobot.smartParkingVehicle(vehicle2);
+        ParkingLotStatus parkingLotStatus = parkingRobot.parkingVehicle(vehicle2);
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertEquals("C", parkingLotStatus.getParkingLot().getLotName());
@@ -194,7 +195,7 @@ class ParkingRobotTest {
 
         Ticket ticket = new Ticket(vehicle, false);
         Ticket ticket1 = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         parkingLotList.get(2).getVehicleList().add(vehicle1);
@@ -204,7 +205,7 @@ class ParkingRobotTest {
 
 
         //when
-        ParkingLotStatus parkingLotStatus = parkingRobot.smartParkingVehicle(vehicle2);
+        ParkingLotStatus parkingLotStatus = parkingRobot.parkingVehicle(vehicle2);
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertEquals("B", parkingLotStatus.getParkingLot().getLotName());

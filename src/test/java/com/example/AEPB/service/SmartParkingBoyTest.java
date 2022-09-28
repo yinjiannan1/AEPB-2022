@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(classes = SmartParkingBoyTest.class)
 class SmartParkingBoyTest {
 
-    private static final int PARKING_LOT_MAX_SIZE = 300;
     SmartParkingBoy smartParkingBoy = new SmartParkingBoy();
 
 
@@ -51,7 +51,7 @@ class SmartParkingBoyTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -79,10 +79,17 @@ class SmartParkingBoyTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        for (int i = 0; i < PARKING_LOT_MAX_SIZE; i++) {
-            Vehicle vehicle1 = new Vehicle();
-            vehicle1.setCarPlateNumber(String.valueOf(i));
-            smartParkingBoy.parkingVehicle(vehicle1);
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < 100; i++) {
+                Vehicle vehicle1 = new Vehicle();
+                vehicle1.setCarPlateNumber(String.valueOf(i));
+                Ticket ticket = new Ticket(vehicle1, false);
+                Map<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+                List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
+                parkingLotList.get(j).getVehicleList().add(vehicle);
+                ticketVehicleHashMap.put(ticket, vehicle1);
+                smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
+            }
         }
         //when
         ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle);
@@ -95,7 +102,12 @@ class SmartParkingBoyTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        smartParkingBoy.parkingVehicle(vehicle);
+        Ticket ticket = new Ticket(vehicle, true);
+        Map<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+        List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
+        parkingLotList.get(0).getVehicleList().add(vehicle);
+        ticketVehicleHashMap.put(ticket, vehicle);
+        smartParkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
         Vehicle vehicleAnother = new Vehicle();
         vehicleAnother.setCarPlateNumber("京A12345");
         //when
@@ -111,7 +123,7 @@ class SmartParkingBoyTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, true);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -128,7 +140,7 @@ class SmartParkingBoyTest {
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
         Ticket ticket = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         ticketVehicleHashMap.put(ticket, vehicle);
@@ -164,7 +176,7 @@ class SmartParkingBoyTest {
 
                 Ticket ticket = new Ticket(vehicle, false);
                 Ticket ticket1 = new Ticket(vehicle, false);
-                HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+                Map<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
                 List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
                 parkingLotList.get(0).getVehicleList().add(vehicle);
                 parkingLotList.get(1).getVehicleList().add(vehicle1);
@@ -174,7 +186,7 @@ class SmartParkingBoyTest {
 
 
         //when
-        ParkingLotStatus parkingLotStatus = smartParkingBoy.smartParkingVehicle(vehicle2);
+        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle2);
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertEquals("C", parkingLotStatus.getParkingLot().getLotName());
@@ -194,7 +206,7 @@ class SmartParkingBoyTest {
 
         Ticket ticket = new Ticket(vehicle, false);
         Ticket ticket1 = new Ticket(vehicle, false);
-        HashMap<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
+        Map<Ticket, Vehicle> ticketVehicleHashMap = smartParkingBoy.getTicketVehicleHashMap();
         List<ParkingLot> parkingLotList = smartParkingBoy.getParkingLotList();
         parkingLotList.get(0).getVehicleList().add(vehicle);
         parkingLotList.get(2).getVehicleList().add(vehicle1);
@@ -204,7 +216,7 @@ class SmartParkingBoyTest {
 
 
         //when
-        ParkingLotStatus parkingLotStatus = smartParkingBoy.smartParkingVehicle(vehicle2);
+        ParkingLotStatus parkingLotStatus = smartParkingBoy.parkingVehicle(vehicle2);
         //then
         assertTrue(parkingLotStatus.isSuccess());
         assertEquals("B", parkingLotStatus.getParkingLot().getLotName());

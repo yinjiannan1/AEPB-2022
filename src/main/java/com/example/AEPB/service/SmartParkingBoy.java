@@ -5,21 +5,16 @@ import com.example.AEPB.entity.ParkingLotStatus;
 import com.example.AEPB.entity.Ticket;
 import com.example.AEPB.entity.Vehicle;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public class SmartParkingBoy extends ParkingBoy{
+public class SmartParkingBoy{
 
+    ParkingBoy parkingBoy = new ParkingBoy();
 
-    public SmartParkingBoy() {
-        super();
-    }
-
-    public ParkingLotStatus smartParkingVehicle(Vehicle vehicle) {
+    public ParkingLotStatus parkingVehicle(Vehicle vehicle) {
 
         ParkingLotStatus parkingLotStatus = new ParkingLotStatus();
-        if(!isExistEmptyLot()){
+        if(!parkingBoy.isExistEmptyLot()){
             System.out.println("车库已满！");
             parkingLotStatus.setSuccess(false);
             return parkingLotStatus;
@@ -31,13 +26,13 @@ public class SmartParkingBoy extends ParkingBoy{
             System.out.println("车牌不能为空！");
             return parkingLotStatus;
         }
-        if(parkingLot.hasSameVehicle(vehicle)){
+        if(hasSameVehicle(vehicle)){
             parkingLotStatus.setSuccess(false);
             System.out.println("车牌重复！已报警");
             return parkingLotStatus;
         }
         Ticket ticket = new Ticket(vehicle, true);
-        ticketVehicleHashMap.put(ticket, vehicle);
+        parkingBoy.ticketVehicleHashMap.put(ticket, vehicle);
         vehicles.add(vehicle);
         parkingLotStatus.setSuccess(true);
         parkingLotStatus.setTicket(ticket);
@@ -45,13 +40,39 @@ public class SmartParkingBoy extends ParkingBoy{
         return parkingLotStatus;
     }
 
+    public ParkingLotStatus pickingVehicle(Ticket ticket){
+       return parkingBoy.pickingVehicle(ticket);
+    }
+
     public ParkingLot findCorrectLot() {
-        this.parkingLotList.sort(Comparator.comparing(ParkingLot::getVehicleNumber));
-        for (ParkingLot lot : this.parkingLotList) {
+        parkingBoy.parkingLotList.sort(Comparator.comparing(ParkingLot::getVehicleNumber));
+        for (ParkingLot lot : parkingBoy.parkingLotList) {
             if (lot.getVehicleList().size() < lot.getSize()) {
                 return lot;
             }
         }
         return null;
+    }
+
+    public boolean hasSameVehicle(Vehicle vehicle) {
+        List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
+        for (ParkingLot lot: parkingLotList) {
+            if(lot.hasSameVehicle(vehicle)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Map<Ticket, Vehicle> getTicketVehicleHashMap() {
+        return parkingBoy.getTicketVehicleHashMap();
+    }
+
+    public List<ParkingLot> getParkingLotList() {
+        return parkingBoy.getParkingLotList();
+    }
+
+    public void setTicketVehicleHashMap(Map<Ticket, Vehicle> ticketVehicleHashMap) {
+        parkingBoy.setTicketVehicleHashMap(ticketVehicleHashMap);
     }
 }
