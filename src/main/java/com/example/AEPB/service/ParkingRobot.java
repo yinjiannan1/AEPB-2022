@@ -64,8 +64,7 @@ public class ParkingRobot{
 
 
     public ParkingLot findCorrectLot() {
-        parkingBoy.parkingLotList.sort(Comparator.comparing(ParkingLot::getEmptyRatio));
-        Collections.reverse(parkingBoy.parkingLotList);
+        parkingBoy.parkingLotList.sort(Comparator.comparing(ParkingLot::getEmptyRatio).reversed());
         for (ParkingLot lot : parkingBoy.parkingLotList) {
             if (lot.getVehicleList().size() < lot.getSize()) {
                 return lot;
