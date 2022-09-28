@@ -161,33 +161,29 @@ class ParkingRobotTest {
     }
 
     @Test
-    void should_return_parking_success_when_try_to_parking_given_B_parking_lot_has_largest_site() {
+    void should_return_parking_success_in_B_when_try_to_park_given_an_parking_boy_and_C_with_higher_empty_ratio() {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
 
-        Vehicle vehicle1 = new Vehicle();
-        vehicle1.setCarPlateNumber("京A2345");
-
-        Vehicle vehicle2 = new Vehicle();
-        vehicle2.setCarPlateNumber("京A1245");
-
-        Ticket ticket = new Ticket(vehicle, false);
-        Ticket ticket1 = new Ticket(vehicle, false);
-        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
-        List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
-        parkingLotList.get(0).getVehicleList().add(vehicle);
-        parkingLotList.get(2).getVehicleList().add(vehicle1);
-        ticketVehicleHashMap.put(ticket, vehicle);
-        ticketVehicleHashMap.put(ticket1, vehicle1);
-        parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
-
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < 50; i++) {
+                Vehicle vehicle1 = new Vehicle();
+                vehicle1.setCarPlateNumber(String.valueOf(i));
+                Ticket ticket = new Ticket(vehicle1, false);
+                Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+                List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
+                parkingLotList.get(j).getVehicleList().add(vehicle1);
+                ticketVehicleHashMap.put(ticket, vehicle1);
+                parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
+            }
+        }
 
         //when
-        ParkingLotStatus parkingLotStatus = parkingRobot.parkingVehicle(vehicle2);
+        ParkingLotStatus parkingLotStatus = parkingRobot.parkingVehicle(vehicle);
         //then
         assertTrue(parkingLotStatus.isSuccess());
-        assertEquals("B", parkingLotStatus.getParkingLot().getLotName());
+        assertEquals("C", parkingLotStatus.getParkingLot().getLotName());
     }
 
 }
