@@ -9,6 +9,10 @@ public class ParkingLot {
 
     private int order;
 
+    public float getEmptyRatio() {
+        return (float) (size-vehicleList.size())/size;
+    }
+
     public String getLotName() {
         return lotName;
     }

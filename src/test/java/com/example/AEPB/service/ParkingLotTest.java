@@ -7,7 +7,6 @@ import com.example.AEPB.entity.Vehicle;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

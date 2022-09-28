@@ -15,10 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest(classes = SmartParkingBoyTest.class)
+@SpringBootTest(classes = ParkingRobotTest.class)
 class ParkingRobotTest {
 
-    private static final int PARKING_LOT_MAX_SIZE = 300;
     ParkingRobot parkingRobot = new ParkingRobot();
 
 
@@ -47,23 +46,6 @@ class ParkingRobotTest {
     }
 
     @Test
-    void should_return_picking_success_when_try_to_picking_given_an_useful_ticket_and_vehicle_has_parked(){
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
-        Ticket ticket = new Ticket(vehicle, true);
-        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
-        List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
-        parkingLotList.get(0).getVehicleList().add(vehicle);
-        ticketVehicleHashMap.put(ticket, vehicle);
-        parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
-        //when
-        ParkingLotStatus pickingStatus = parkingRobot.pickingVehicle(ticket);
-        //then
-        assertTrue(pickingStatus.isSuccess());
-    }
-
-    @Test
     void should_return_ticket_when_parked_vehicle_given_an_vehicle_parked(){
         //given
         Vehicle vehicle = new Vehicle();
@@ -80,10 +62,17 @@ class ParkingRobotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        for (int i = 0; i < PARKING_LOT_MAX_SIZE; i++) {
-            Vehicle vehicle1 = new Vehicle();
-            vehicle1.setCarPlateNumber(String.valueOf(i));
-            parkingRobot.parkingVehicle(vehicle1);
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < 100; i++) {
+                Vehicle vehicle1 = new Vehicle();
+                vehicle1.setCarPlateNumber(String.valueOf(i));
+                Ticket ticket = new Ticket(vehicle1, false);
+                Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+                List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
+                parkingLotList.get(j).getVehicleList().add(vehicle);
+                ticketVehicleHashMap.put(ticket, vehicle1);
+                parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
+            }
         }
         //when
         ParkingLotStatus parkingLotStatus = parkingRobot.parkingVehicle(vehicle);
@@ -96,7 +85,12 @@ class ParkingRobotTest {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        parkingRobot.parkingVehicle(vehicle);
+        Ticket ticket = new Ticket(vehicle, true);
+        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+        List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
+        parkingLotList.get(0).getVehicleList().add(vehicle);
+        ticketVehicleHashMap.put(ticket, vehicle);
+        parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
         Vehicle vehicleAnother = new Vehicle();
         vehicleAnother.setCarPlateNumber("京A12345");
         //when
@@ -107,43 +101,22 @@ class ParkingRobotTest {
     }
 
     @Test
-    void should_return_false_when_picking_vehicle_given_an_vehicle_parked_and_get_a_ticket(){
+    void should_return_parking_success_in_A_when_try_to_park_given_an_parking_boy_and_A_with_higher_empty_ratio_parking_lot () {
         //given
         Vehicle vehicle = new Vehicle();
         vehicle.setCarPlateNumber("京A12345");
-        Ticket ticket = new Ticket(vehicle, true);
-        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
-        List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
-        parkingLotList.get(0).getVehicleList().add(vehicle);
-        ticketVehicleHashMap.put(ticket, vehicle);
-        parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
-        //when
-        parkingRobot.pickingVehicle(ticket);
-        //then
-        assertFalse(ticket.isEnabled());
-    }
-
-    @Test
-    void should_return_false_when_try_to_pick_vehicle_given_an_unuseful_ticket() {
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
-        Ticket ticket = new Ticket(vehicle, false);
-        Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
-        List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
-        parkingLotList.get(0).getVehicleList().add(vehicle);
-        ticketVehicleHashMap.put(ticket, vehicle);
-        parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
-        //when
-        ParkingLotStatus parkingLotStatus = parkingRobot.pickingVehicle(ticket);
-        assertFalse(parkingLotStatus.isSuccess());
-    }
-
-    @Test
-    void should_return_parking_success_in_A_when_try_to_park_given_an_parking_boy_and_A_with_empty_parking_lot () {
-        //given
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarPlateNumber("京A12345");
+        for (int j = 1; j < 3; j++) {
+            for (int i = 0; i < 50; i++) {
+                Vehicle vehicle1 = new Vehicle();
+                vehicle1.setCarPlateNumber(String.valueOf(i));
+                Ticket ticket = new Ticket(vehicle1, false);
+                Map<Ticket, Vehicle> ticketVehicleHashMap = parkingRobot.getTicketVehicleHashMap();
+                List<ParkingLot> parkingLotList = parkingRobot.getParkingLotList();
+                parkingLotList.get(j).getVehicleList().add(vehicle1);
+                ticketVehicleHashMap.put(ticket, vehicle1);
+                parkingRobot.setTicketVehicleHashMap(ticketVehicleHashMap);
+            }
+        }
         //when
         ParkingLotStatus parkingLotStatus = parkingRobot.parkingVehicle(vehicle);
         //then
