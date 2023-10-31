@@ -55,13 +55,8 @@ public class SmartParkingBoy{
     }
 
     public boolean hasSameVehicle(Vehicle vehicle) {
-        List<ParkingLot> parkingLotList = parkingBoy.getParkingLotList();
-        for (ParkingLot lot: parkingLotList) {
-            if(lot.hasSameVehicle(vehicle)){
-                return true;
-            }
-        }
-        return false;
+        return parkingBoy.getParkingLotList().stream()
+                .anyMatch(lot -> lot.hasSameVehicle(vehicle));
     }
 
     public Map<Ticket, Vehicle> getTicketVehicleHashMap() {
