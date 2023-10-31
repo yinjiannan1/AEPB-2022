@@ -20,7 +20,7 @@ public class ParkingRobot{
         }
         ParkingLot parkingLot = findCorrectLot();
         List<Vehicle> vehicles = parkingLot.getVehicleList();
-        if(Objects.isNull(vehicle) || vehicle.getCarPlateNumber() == null){
+        if(Objects.isNull(vehicle)){
             parkingLotStatus.setSuccess(false);
             System.out.println("车牌不能为空！");
             return parkingLotStatus;
@@ -62,10 +62,9 @@ public class ParkingRobot{
         return false;
     }
 
-
     public ParkingLot findCorrectLot() {
-        parkingBoy.parkingLotList.sort(Comparator.comparing(ParkingLot::getEmptyRatio).reversed());
-        for (ParkingLot lot : parkingBoy.parkingLotList) {
+        parkingBoy.getParkingLotList().sort(Comparator.comparing(ParkingLot::getEmptyRatio));
+        for (ParkingLot lot : parkingBoy.getParkingLotList()) {
             if (lot.getVehicleList().size() < lot.getSize()) {
                 return lot;
             }
