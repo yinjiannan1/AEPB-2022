@@ -3,11 +3,10 @@ package com.example.AEPB.service;
 import com.example.AEPB.entity.ParkingLot;
 import com.example.AEPB.entity.ParkingLotStatus;
 import com.example.AEPB.entity.Ticket;
-import com.example.AEPB.entity.Vehicle;
-
-import java.util.*;
-
-public class SmartParkingBoy{
+public boolean hasSameVehicle(Vehicle vehicle) {
+    return parkingBoy.getParkingLotList().stream()
+            .anyMatch(lot -> lot.hasSameVehicle(vehicle));
+}
 
     ParkingBoy parkingBoy = new ParkingBoy();
 
