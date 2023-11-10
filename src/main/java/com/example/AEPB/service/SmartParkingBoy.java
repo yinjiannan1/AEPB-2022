@@ -1,13 +1,27 @@
-package com.example.AEPB.service;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import com.example.AEPB.entity.ParkingLot;
-import com.example.AEPB.entity.ParkingLotStatus;
-import com.example.AEPB.entity.Ticket;
-import com.example.AEPB.entity.Vehicle;
+public ParkingLot findCorrectLot() throws Exception {
+    List<ParkingLot> parkingLotList = new ArrayList<>();
+    for (ParkingLot lot : parkingBoy.parkingLotList) {
+        if (lot.getVehicleList().size() < lot.getSize()) {
+            return lot;
+        }
+        parkingLotList.add(lot);
+    }
+    Collections.sort(parkingLotList, Comparator.comparing(ParkingLot::getEmptyRatio));
+    return parkingLotList.stream().findFirst().orElse(null);
+}
+</snippet>
 
-import java.util.*;
-
-public class SmartParkingBoy{
+<<<<<<< APPEND (index=1)
+public ParkingLot findCorrectLot() throws Exception { ... }
+====
+public ParkingLot findCorrectLot() throws Exception { ... }
+====
 
     ParkingBoy parkingBoy = new ParkingBoy();
 
